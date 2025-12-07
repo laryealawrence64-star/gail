@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart & Fidelity | Kimora's Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navigation Styling */
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav a.active {
+            background: rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .cart-right {
+            background: rgba(255, 126, 95, 0.9);
+        }
+        
+        .cart-right:hover {
+            background: rgba(255, 126, 95, 1);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 15px auto;
+            width: 90%;
+            max-width: 200px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* Cart Section */
+        .cart-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .cart-title {
+            color: #2a5298;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f0f7ff;
+        }
+        
+        .cart-items {
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            background: #f8f9ff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #2a5298;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cart-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            color: #2a5298;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: #ff7e5f;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .remove-btn {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .remove-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 40px;
+            font-size: 1.2rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+            border: 2px dashed #ddd;
+        }
+        
+        .cart-summary {
+            background: linear-gradient(135deg, #f0f7ff, #e6f0ff);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 2px solid #2a5298;
+        }
+        
+        .total-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2a5298;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .pay-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 200px;
+        }
+        
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(42, 82, 152, 0.3);
+        }
+        
+        .clear-btn {
+            background: linear-gradient(135deg, #777, #555);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 200px;
+        }
+        
+        .clear-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(119, 119, 119, 0.3);
+        }
+        
+        /* Fidelity Designs Section */
+        .fidelity-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        
+        .fidelity-title {
+            color: #2a5298;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #f0f7ff;
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .design-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+        
+        .design-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: #2a5298;
+        }
+        
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        .image-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(42, 82, 152, 0.9);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .image-container:hover .image-label {
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+            margin-top: 50px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 10px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                flex-direction: column;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(42, 82, 152, 0.98);
+                z-index: 1000;
+                border-radius: 0 0 15px 15px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                padding: 20px;
+                gap: 10px;
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                justify-content: center;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                width: 100%;
+            }
+            
+            .cart-section, .fidelity-section {
+                padding: 25px;
+                margin: 0 15px;
+            }
+            
+            .cart-title, .fidelity-title {
+                font-size: 1.8rem;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+            
+            .pay-btn, .clear-btn {
+                width: 100%;
+            }
+            
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .design-image {
+                height: 250px;
+            }
+            
+            main {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cart-title, .fidelity-title {
+                font-size: 1.5rem;
+            }
+            
+            .cart-section, .fidelity-section {
+                padding: 20px;
+            }
+            
+            .design-image {
+                height: 200px;
+            }
+            
+            .total-price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <i class="fas fa-shopping-cart"></i>
+            Cart & Fidelity Designs
+        </h1>
+        
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+        
+        <nav id="mainNav">
+            <a href="project.instructions.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-pills"></i> Products</a>
+            <a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="contact.html"><i class="fas fa-address-book"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a class="active cart-right" href="cart.html"><i class="fas fa-shopping-cart"></i> Cart & Fidelity</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Cart Section -->
+        <section class="cart-section">
+            <h2 class="cart-title">
+                <i class="fas fa-shopping-basket"></i>
+                Your Shopping Cart
+            </h2>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be loaded here dynamically -->
+            </div>
+            
+            <div class="cart-summary">
+                <div class="total-price">
+                    <span>Total Amount:</span>
+                    <span id="totalAmount">₵0.00</span>
+                </div>
+                
+                <div class="cart-actions">
+                    <button class="pay-btn" onclick="pay()">
+                        <i class="fas fa-credit-card"></i>
+                        Proceed to Payment
+                    </button>
+                    <button class="clear-btn" onclick="clearCart()">
+                        <i class="fas fa-trash-alt"></i>
+                        Clear Cart
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Fidelity Designs Section -->
+        <section class="fidelity-section">
+            <h2 class="fidelity-title">
+                <i class="fas fa-palette"></i>
+                LOW FIDELITY DESIGNS
+            </h2>
+            
+            <div class="image-gallery">
+                <div class="image-container">
+                    <img src="images/design1.jpg" alt="Fidelity Design 1" class="design-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Design+1'">
+                    <div class="image-label">Design Concept 1</div>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/design2.jpg" alt="Fidelity Design 2" class="design-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Design+2'">
+                    <div class="image-label">Design Concept 2</div>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/design3.jpg" alt="Fidelity Design 3" class="design-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Design+3'">
+                    <div class="image-label">Design Concept 3</div>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/design4.jpg" alt="Fidelity Design 4" class="design-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Design+4'">
+                    <div class="image-label">Design Concept 4</div>
+                </div>
+                
+                <div class="image-container">
+                    <img src="images/design4(2).jpg" alt="Fidelity Design 5" class="design-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Design+5'">
+                    <div class="image-label">Design Concept 5</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Kimora's Pharmacy &copy; 2023. All Rights Reserved.</p>
+        <p>Your trusted partner in health and wellness</p>
+        <div class="footer-links">
+            <a href="project.instructions.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mainNav.classList.toggle('active');
+                menuToggle.innerHTML = mainNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i> Close' 
+                    : '<i class="fas fa-bars"></i> Menu';
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mainNav.contains(e.target) && !menuToggle.contains(e.target) && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+            
+            // Close menu on link click (mobile)
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+            
+            // Load and display cart
+            updateCartDisplay();
+        });
+
+        // Load cart from localStorage (compatible with products page)
+        function getCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            return cart;
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cart = getCart();
+            const cartItemsDiv = document.getElementById('cartItems');
+            const totalAmountSpan = document.getElementById('totalAmount');
+            
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart fa-3x" style="margin-bottom: 15px; color: #ccc;"></i>
+                        <p>Your cart is currently empty</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Add products from the Products page</p>
+                    </div>
+                `;
+            } else {
+                cartItemsDiv.innerHTML = cart.map((item, index) => {
+                    // Extract price value from string like "₵1,500"
+                    const priceStr = item.price.replace(/[^\d.-]/g, '');
+                    const price = parseFloat(priceStr) || 0;
+                    const itemTotal = price * (item.quantity || 1);
+                    total += itemTotal;
+                    
+                    return `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">${item.price} × ${item.quantity || 1}</div>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i>
+                                Remove
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Format total as currency
+            totalAmountSpan.textContent = `₵${total.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+        }
+
+        // Remove item from cart
+        function removeFromCart(index) {
+            let cart = getCart();
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            
+            // Show notification
+            showNotification('Item removed from cart');
+        }
+
+        // Clear entire cart
+        function clearCart() {
+            if (getCart().length === 0) {
+                alert('Your cart is already empty!');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear your cart?')) {
+                localStorage.removeItem('cart');
+                updateCartDisplay();
+                showNotification('Cart cleared successfully');
+            }
+        }
+
+        // Process payment
+        function pay() {
+            const cart = getCart();
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty. Add products before proceeding to payment.');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => {
+                const priceStr = item.price.replace(/[^\d.-]/g, '');
+                const price = parseFloat(priceStr) || 0;
+                return sum + (price * (item.quantity || 1));
+            }, 0);
+            
+            const paymentMethod = prompt(
+                `Payment Amount: ₵${total.toLocaleString('en-US', {minimumFractionDigits: 2})}\n\n` +
+                'Choose payment method:\n' +
+                '1. Mobile Money\n' +
+                '2. Credit/Debit Card\n' +
+                '3. Cash on Delivery\n' +
+                'Enter 1, 2, or 3:'
+            );
+            
+            if (paymentMethod) {
+                const methods = {
+                    '1': 'Mobile Money',
+                    '2': 'Credit/Debit Card',
+                    '3': 'Cash on Delivery'
+                };
+                
+                if (methods[paymentMethod]) {
+                    alert(`Payment successful via ${methods[paymentMethod]}!\n\nOrder confirmed. Thank you for shopping with Kimora's Pharmacy!`);
+                    clearCart();
+                } else {
+                    alert('Invalid payment method selected.');
+                }
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-weight: 500;
+            `;
+            
+            notification.innerHTML = `<strong><i class="fas fa-check-circle"></i> Success!</strong><br>${message}`;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add CSS for animations if not already present
+        if (!document.querySelector('#animationStyles')) {
+            const style = document.createElement('style');
+            style.id = 'animationStyles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>

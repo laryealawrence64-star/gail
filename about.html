@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Kimora's Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('images/about\ 1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, rgba(42, 92, 169, 0.9), rgba(30, 60, 114, 0.9));
+            color: rgb(157, 145, 145);
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Navigation Styling */
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: rgba(246, 242, 242, 0.781);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        nav a {
+            color: rgb(86, 81, 81);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        nav a.active {
+            background: rgba(255, 255, 255, 0.35);
+            font-weight: bold;
+        }
+        
+        .cart-right {
+            background: rgba(255, 126, 95, 0.8);
+            margin-left: auto;
+        }
+        
+        .cart-right:hover {
+            background: rgba(255, 126, 95, 1);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 15px auto;
+            width: 90%;
+            max-width: 200px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* Content Container */
+        .content-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        /* Search Section */
+        .search-section {
+            padding: 25px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            margin: 0 auto 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+        
+        .search-section h2 {
+            color: #2a5ca9;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        /* About Content */
+        .about {
+            margin-top: 20px;
+        }
+        
+        .ceo {
+            background: linear-gradient(135deg, #e8f4fc, #f0f8ff);
+            padding: 25px;
+            border-left: 5px solid #2a5ca9;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        input[type="text"] {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #2a5ca9;
+            box-shadow: 0 0 0 3px rgba(42, 92, 169, 0.1);
+        }
+        
+        h1, h2, h3 {
+            color: #2a5ca9;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin: 20px 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        li:before {
+            content: '✓';
+            color: #2a5ca9;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(42, 92, 169, 0.9), rgba(30, 60, 114, 0.9));
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 40px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 10px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav {
+                flex-direction: column;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(42, 92, 169, 0.98);
+                z-index: 1000;
+                border-radius: 0 0 10px 10px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                padding: 15px;
+                gap: 8px;
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav a {
+                justify-content: center;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                width: 100%;
+            }
+            
+            .cart-right {
+                margin-left: 0;
+            }
+            
+            .content-container {
+                padding: 20px;
+                margin: 0 15px;
+            }
+            
+            .search-section {
+                padding: 20px;
+                margin: 0 15px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+            
+            main {
+                padding: 0 15px;
+                margin: 20px auto;
+            }
+            
+            .ceo {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .search-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .content-container {
+                padding: 15px;
+            }
+            
+            li {
+                padding: 8px;
+            }
+            
+            input[type="text"] {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kimora's Pharmacy</h1>
+        
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+        
+        <nav id="mainNav">
+            <nav class="topnav" id="topnav">
+            <a class="active" href="project.instructions.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-pills"></i> Products</a>
+            <a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="contact.html"><i class="fas fa-address-book"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="cart.html" class="cart-right"><i class="fas fa-shopping-cart"></i> Cart & Fidelity</a>
+        </nav>
+           
+    </header>
+
+    <main>
+        <div class="content-container">
+            <div class="search-section">
+                <h2><i class="fas fa-search"></i> Wellness | Health Corner</h2>
+                <input type="text" placeholder="Search products, services..." aria-label="Search">
+            </div>
+
+            <div class="about">
+                <h2>About Kimora's Pharmacy</h2>
+                <p>Kimora's Pharmacy is dedicated to providing quality healthcare products and services to our community. We focus on wellness, preventive care, and personalized health solutions.</p>
+                <p>Our mission is to make healthcare accessible and affordable for everyone, with a focus on customer care and professional service.</p>
+
+                <div class="ceo">
+                    <h3><i class="fas fa-user-tie"></i> Meet Our CEO</h3>
+                    <p><strong>Abigail Bortsie</strong></p>
+                    <p>With over 10 years of experience in pharmaceutical care, Abigail founded Kimora's Pharmacy with a vision to create a community-focused healthcare provider that puts patients first.</p>
+                </div>
+
+                <h3><i class="fas fa-star"></i> Our Values</h3>
+                <ul>
+                    <li>Quality healthcare products</li>
+                    <li>Professional pharmaceutical advice</li>
+                    <li>Community wellness programs</li>
+                    <li>Affordable pricing</li>
+                    <li>Personalized customer service</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>Kimora's Pharmacy &copy; 2023. All Rights Reserved.</p>
+        <p>Your trusted partner in health and wellness</p>
+        <div class="footer-links">
+            <a href="project.instructions.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mainNav.classList.toggle('active');
+                menuToggle.innerHTML = mainNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i> Close' 
+                    : '<i class="fas fa-bars"></i> Menu';
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mainNav.contains(e.target) && !menuToggle.contains(e.target) && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('input[type="text"]');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim();
+                    if (searchTerm) {
+                        alert(`Searching for: "${searchTerm}"\n\nThis would normally search our products and services.`);
+                        this.value = '';
+                    }
+                }
+            });
+            
+            // Close menu on link click (mobile)
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768 && mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

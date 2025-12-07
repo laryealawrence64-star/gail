@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Kimora's Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        /* Header Styling */
+        header { 
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white; 
+            padding: 20px 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        header h1 {
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Navigation Styling */
+        .topnav {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        
+        .topnav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .topnav a.active {
+            background: rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-right {
+            background: rgba(255, 126, 95, 0.8);
+        }
+        
+        .cart-right:hover {
+            background: rgba(255, 126, 95, 1);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px auto;
+            width: 90%;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px 40px;
+        }
+        
+        /* Services Grid */
+        .services { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+            margin-bottom: 40px;
+        }
+        
+        .service { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+            border-color: #2a5298;
+        }
+        
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2a5298, #1e3c72);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: #2a5298;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .wellness { 
+            background: white; 
+            padding: 30px; 
+            margin-top: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #2a5298;
+        }
+        
+        h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h3 { 
+            color: #2a5298; 
+            margin-bottom: 15px; 
+            font-size: 1.4rem;
+            line-height: 1.3;
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        
+        .wellness p {
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .wellness p::before {
+            content: '✓';
+            color: #2a5298;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 10px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .topnav {
+                flex-direction: column;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(42, 82, 152, 0.98);
+                z-index: 1000;
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                padding: 15px;
+                gap: 8px;
+            }
+            
+            .topnav.active {
+                display: flex;
+            }
+            
+            .topnav a {
+                justify-content: center;
+                padding: 12px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            .services { 
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service {
+                padding: 20px;
+            }
+            
+            .wellness {
+                padding: 20px;
+            }
+            
+            .container {
+                padding: 0 10px 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .service {
+                padding: 18px;
+            }
+            
+            .wellness {
+                padding: 18px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+        }
+        
+        /* Animation for service cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .service {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .service:nth-child(2) { animation-delay: 0.1s; }
+        .service:nth-child(3) { animation-delay: 0.2s; }
+        .service:nth-child(4) { animation-delay: 0.3s; }
+        .service:nth-child(5) { animation-delay: 0.4s; }
+        .service:nth-child(6) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-concierge-bell"></i> Pharmacy Services</h1>
+        
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+        
+        <nav class="topnav" id="topnav">
+            <a href="project.instructions.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-pills"></i> Products</a>
+            <a class="active" href="services.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="contact.html"><i class="fas fa-address-book"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="cart.html" class="cart-right"><i class="fas fa-shopping-cart"></i> Cart & Fidelity</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="services">
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                </div>
+                <h3>Prescription Services</h3>
+                <p>Fast and accurate prescription filling with delivery options. Our pharmacists are available for consultation to ensure proper medication usage.</p>
+            </div>
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <h3>Immunizations</h3>
+                <p>Flu shots, travel vaccines, and COVID-19 vaccines administered by certified professionals in a comfortable setting.</p>
+            </div>
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Health Screenings</h3>
+                <p>Blood pressure, cholesterol, glucose testing, and comprehensive health assessments with immediate results.</p>
+            </div>
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-capsules"></i>
+                </div>
+                <h3>Medication Management</h3>
+                <p>Personalized consultations, drug interaction checks, and comprehensive medication therapy management.</p>
+            </div>
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Home Healthcare</h3>
+                <p>Medical equipment rentals, home delivery of medications, nursing supplies, and patient care assistance.</p>
+            </div>
+            <div class="service">
+                <div class="service-icon">
+                    <i class="fas fa-mortar-pestle"></i>
+                </div>
+                <h3>Compounding Services</h3>
+                <p>Custom medication preparation for specific patient needs, allergies, and personalized dosage requirements.</p>
+            </div>
+        </div>
+
+        <div class="wellness">
+            <h2><i class="fas fa-heart"></i> Wellness & Health Corner</h2>
+            <p><strong>Nutrition Counseling:</strong> Personalized dietary advice and supplement recommendations tailored to your health goals.</p>
+            <p><strong>Fitness Planning:</strong> Custom exercise programs designed for your specific health conditions and fitness level.</p>
+            <p><strong>Health Education:</strong> Regular workshops, seminars, and educational resources for maintaining a healthy lifestyle.</p>
+            <p><strong>Smoking Cessation:</strong> Comprehensive programs and ongoing support to help you successfully quit smoking.</p>
+            <p><strong>Chronic Disease Management:</strong> Dedicated support programs for diabetes, hypertension, and other chronic conditions.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Kimora's Pharmacy &copy; 2023. All Rights Reserved.</p>
+        <p>Your trusted partner in health and wellness</p>
+        <div class="footer-links">
+            <a href="project.instructions.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const topnav = document.getElementById('topnav');
+            
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function() {
+                topnav.classList.toggle('active');
+                if (topnav.classList.contains('active')) {
+                    menuToggle.innerHTML = '<i class="fas fa-times"></i> Close';
+                } else {
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!topnav.contains(event.target) && !menuToggle.contains(event.target) && topnav.classList.contains('active')) {
+                    topnav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+            
+            // Close menu when a link is clicked (for mobile)
+            const navLinks = document.querySelectorAll('.topnav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        topnav.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    topnav.classList.remove('active');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Kimora's Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/kimora.css">
+    <style>
+        /* Products Page Specific Styles */
+        
+        /* Header Styling for Products Page */
+        .page-header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .topnav {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 16px 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .topnav a:last-child {
+            border-right: none;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        .topnav a:last-child:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+        }
+        
+        .topnav a.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .topnav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: #00c6ff;
+            border-radius: 2px;
+        }
+        
+        .topnav a:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .page-header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Search and Filter Container */
+        .filter-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+        
+        .category-filter select {
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: white;
+            font-size: 1rem;
+            min-width: 200px;
+            cursor: pointer;
+        }
+        
+        .category-filter select:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #2a5298;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid #f0f7ff;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 1.25rem;
+            color: #2a5298;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .product-category {
+            display: inline-block;
+            background: #f0f7ff;
+            color: #2a5298;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            color: #ff7e5f;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-add-cart {
+            flex: 1;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-add-cart:hover {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            transform: scale(1.05);
+        }
+        
+        .btn-view-details {
+            background: #f0f7ff;
+            color: #2a5298;
+            border: 2px solid #2a5298;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-view-details:hover {
+            background: #2a5298;
+            color: white;
+        }
+        
+        /* Table View (Alternative) */
+        .table-view-toggle {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .view-toggle-btn {
+            background: #f0f7ff;
+            border: 2px solid #2a5298;
+            color: #2a5298;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .view-toggle-btn.active {
+            background: #2a5298;
+            color: white;
+        }
+        
+        .view-toggle-btn:hover:not(.active) {
+            background: #e0e7ff;
+        }
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            display: none;
+        }
+        
+        .products-table th {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .products-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .products-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .products-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Cart Summary */
+        .cart-summary {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(255, 126, 95, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-summary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 126, 95, 0.4);
+        }
+        
+        .cart-count {
+            background: white;
+            color: #ff7e5f;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .category-filter select {
+                width: 100%;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .products-table {
+                display: none !important;
+            }
+            
+            .products-grid {
+                display: grid !important;
+            }
+            
+            .cart-summary {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                padding: 20px 15px;
+            }
+            
+            .product-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <div class="page-header">
+        <h1><i class="fas fa-pills"></i> Our Pharmacy Products</h1>
+      <nav id="mainNav">
+            <nav class="topnav" id="topnav">
+            <a class="active" href="project.instructions.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-pills"></i> Products</a>
+            <a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="contact.html"><i class="fas fa-address-book"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="cart.html" class="cart-right"><i class="fas fa-shopping-cart"></i> Cart & Fidelity</a>
+        </nav>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="filter-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products by name, category, or description..." autocomplete="off">
+        </div>
+        
+        <div class="category-filter">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Supplement">Supplement</option>
+                <option value="Medical">Medical Equipment</option>
+                <option value="Personal Care">Personal Care</option>
+                <option value="First Aid">First Aid</option>
+            </select>
+        </div>
+        
+        <div class="table-view-toggle">
+            <button class="view-toggle-btn active" onclick="toggleView('grid')"><i class="fas fa-th-large"></i> Grid</button>
+            <button class="view-toggle-btn" onclick="toggleView('table')"><i class="fas fa-table"></i> Table</button>
+        </div>
+    </div>
+
+    <!-- Products Grid View -->
+    <div class="products-grid" id="productsGrid">
+        <!-- Products will be loaded here dynamically -->
+    </div>
+
+    <!-- Products Table View (Hidden by default) -->
+    <table class="products-table" id="productsTable">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="productsTableBody">
+            <!-- Table rows will be loaded here dynamically -->
+        </tbody>
+    </table>
+
+    <!-- Floating Cart Summary -->
+    <div class="cart-summary" onclick="window.location.href='cart.html'">
+        <i class="fas fa-shopping-cart fa-2x"></i>
+        <div>
+            <div style="font-weight: bold;">Cart Total</div>
+            <div id="cartTotal">₵0.00</div>
+        </div>
+        <div class="cart-count" id="cartCount">0</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Kimora's Pharmacy &copy; 2023. All Rights Reserved.</p>
+        <p>Your trusted partner in health and wellness</p>
+        <div class="footer-links">
+            <a href="project.instructions.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </div>
+
+    <script>
+        // Sample products data
+        const products = [
+            { id: 1, name: "Pan Relief", category: "Medicine", description: "Fast-acting pain relief tablets", price: "₵1,500", image: "images/medicine-image1.jpg" },
+            { id: 2, name: "Vitamin C 500mg", category: "Supplement", description: "Immune system booster", price: "₵800", image: "images/medicine-image2.jpg" },
+            { id: 3, name: "Cough Syrup", category: "Medicine", description: "For dry and chesty cough", price: "₵1,200", image: "images/medicine-image3.jpg" },
+            { id: 4, name: "Blood Pressure Monitor", category: "Medical Equipment", description: "Digital automatic monitor", price: "₵3,500", image: "images/medicine-image4.jpg" },
+            { id: 5, name: "Tylenol Extra Strength", category: "Medicine", description: "Pain and fever reducer", price: "₵950", image: "images/medicine-image5.jpg" },
+            { id: 6, name: "Cortizone Cream", category: "Personal Care", description: "Anti-itch cream 1%", price: "₵1,100", image: "images/medicine-image6.jpg" },
+            { id: 7, name: "First Aid Kit", category: "First Aid", description: "Complete emergency kit", price: "₵2,500", image: "images/medicine-image1.jpg" },
+            { id: 8, name: "Omega-3 Fish Oil", category: "Supplement", description: "Heart health supplement", price: "₵1,800", image: "images/medicine-image2.jpg" },
+            { id: 9, name: "Antibiotic Ointment", category: "First Aid", description: "Prevents infection in minor cuts", price: "₵750", image: "images/medicine-image3.jpg" },
+            { id: 10, name: "Thermometer Digital", category: "Medical Equipment", description: "Fast and accurate readings", price: "₵1,300", image: "images/medicine-image4.jpg" },
+            { id: 11, name: "Allergy Relief", category: "Medicine", description: "24-hour non-drowsy formula", price: "₵1,250", image: "images/medicine-image5.jpg" },
+            { id: 12, name: "Hand Sanitizer", category: "Personal Care", description: "Alcohol-based 70%", price: "₵600", image: "images/medicine-image6.jpg" }
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateCartDisplay();
+            
+            // Setup search functionality
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                filterProducts();
+            });
+            
+            // Setup category filter
+            document.getElementById('categoryFilter').addEventListener('change', function(e) {
+                filterProducts();
+            });
+            
+            // Setup mobile menu toggle
+            setupMobileMenu();
+        });
+
+        // Load products into both grid and table views
+        function loadProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            const tableBody = document.getElementById('productsTableBody');
+            
+            productsGrid.innerHTML = '';
+            tableBody.innerHTML = '';
+            
+            products.forEach(product => {
+                // Grid view card
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.dataset.id = product.id;
+                productCard.dataset.category = product.category;
+                productCard.dataset.name = product.name.toLowerCase();
+                productCard.dataset.description = product.description.toLowerCase();
+                
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200/2a5298/ffffff?text=Medicine'">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <span class="product-category">${product.category}</span>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">${product.price}</div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(${product.id})">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                            <button class="btn-view-details" onclick="viewProductDetails(${product.id})">
+                                <i class="fas fa-info-circle"></i> Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+                
+                // Table view row
+                const tableRow = document.createElement('tr');
+                tableRow.dataset.id = product.id;
+                tableRow.dataset.category = product.category;
+                tableRow.dataset.name = product.name.toLowerCase();
+                tableRow.dataset.description = product.description.toLowerCase();
+                
+                tableRow.innerHTML = `
+                    <td><strong>${product.name}</strong></td>
+                    <td><span class="product-category">${product.category}</span></td>
+                    <td>${product.description}</td>
+                    <td class="product-price">${product.price}</td>
+                    <td>
+                        <button class="btn-add-cart" onclick="addToCart(${product.id})">
+                            <i class="fas fa-cart-plus"></i> Add
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tableRow);
+            });
+        }
+
+        // Filter products based on search and category
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            // Filter grid view
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.dataset.name;
+                const desc = card.dataset.description;
+                const cat = card.dataset.category;
+                
+                const matchesSearch = !searchTerm || name.includes(searchTerm) || desc.includes(searchTerm);
+                const matchesCategory = !category || cat === category;
+                
+                card.style.display = (matchesSearch && matchesCategory) ? 'block' : 'none';
+            });
+            
+            // Filter table view
+            document.querySelectorAll('#productsTableBody tr').forEach(row => {
+                const name = row.dataset.name;
+                const desc = row.dataset.description;
+                const cat = row.dataset.category;
+                
+                const matchesSearch = !searchTerm || name.includes(searchTerm) || desc.includes(searchTerm);
+                const matchesCategory = !category || cat === category;
+                
+                row.style.display = (matchesSearch && matchesCategory) ? '' : 'none';
+            });
+        }
+
+        // Toggle between grid and table view
+        function toggleView(viewType) {
+            const gridBtn = document.querySelector('.view-toggle-btn:nth-child(1)');
+            const tableBtn = document.querySelector('.view-toggle-btn:nth-child(2)');
+            const gridView = document.getElementById('productsGrid');
+            const tableView = document.getElementById('productsTable');
+            
+            if (viewType === 'grid') {
+                gridBtn.classList.add('active');
+                tableBtn.classList.remove('active');
+                gridView.style.display = 'grid';
+                tableView.style.display = 'none';
+            } else {
+                gridBtn.classList.remove('active');
+                tableBtn.classList.add('active');
+                gridView.style.display = 'none';
+                tableView.style.display = 'table';
+            }
+        }
+
+        // Add product to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Get existing cart or create new one
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if product already exists in cart
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 1) + 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    quantity: 1
+                });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart display
+            updateCartDisplay();
+            
+            // Show notification
+            showNotification(`${product.name} added to cart!`);
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            // Update count
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            cartCount.textContent = totalItems;
+            
+            // Calculate total price
+            let total = 0;
+            cart.forEach(item => {
+                // Remove currency symbol and commas, then parse as number
+                const priceStr = item.price.replace(/[^\d.-]/g, '');
+                const price = parseFloat(priceStr) || 0;
+                total += price * (item.quantity || 1);
+            });
+            
+            // Format total as currency
+            cartTotal.textContent = `₵${total.toLocaleString('en-US', {minimumFractionDigits: 2})}`;
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            notification.innerHTML = `<strong><i class="fas fa-check-circle"></i> Success!</strong><br>${message}`;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // View product details
+        function viewProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            alert(`Product Details:\n\nName: ${product.name}\nCategory: ${product.category}\nDescription: ${product.description}\nPrice: ${product.price}\n\nClick "Add to Cart" to purchase this item.`);
+        }
+
+        // Setup mobile menu toggle
+        function setupMobileMenu() {
+            // Create mobile menu button if not exists
+            if (window.innerWidth <= 768 && !document.getElementById('mobileMenuToggle')) {
+                const nav = document.querySelector('.topnav');
+                const menuToggle = document.createElement('button');
+                menuToggle.id = 'mobileMenuToggle';
+                menuToggle.className = 'menu-toggle';
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                
+                nav.parentNode.insertBefore(menuToggle, nav);
+                
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                    menuToggle.innerHTML = nav.classList.contains('active') 
+                        ? '<i class="fas fa-times"></i> Close' 
+                        : '<i class="fas fa-bars"></i> Menu';
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('active')) {
+                        nav.classList.remove('active');
+                        menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+                    }
+                });
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const menuToggle = document.getElementById('mobileMenuToggle');
+                if (window.innerWidth > 768 && menuToggle) {
+                    menuToggle.remove();
+                    document.querySelector('.topnav').classList.remove('active');
+                } else if (window.innerWidth <= 768 && !menuToggle) {
+                    setupMobileMenu();
+                }
+            });
+        }
+
+        // Add CSS for animations if not already present
+        if (!document.querySelector('#animationStyles')) {
+            const style = document.createElement('style');
+            style.id = 'animationStyles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
