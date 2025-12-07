@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimora's Pharmacy - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 0 15px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header Section */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2a5298;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .site-title {
+            color: #2a5298;
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        /* Navigation */
+        .topnav {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 16px 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .topnav a:last-child {
+            border-right: none;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            font-weight: bold;
+            margin-left: auto;
+        }
+        
+        .topnav a:last-child:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+        }
+        
+        .topnav a.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .topnav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: #00c6ff;
+            border-radius: 2px;
+        }
+        
+        .topnav a:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search-form {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .search-form label {
+            font-weight: 600;
+            color: #2a5298;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-form input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+        
+        .search-form button {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .search-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(42, 82, 152, 0.3);
+        }
+        
+        /* Category Banner */
+        .category {
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            border-radius: 10px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Main Content Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 20px 0;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 400px;
+            object-fit: cover;
+        }
+        
+        /* Products Section */
+        .products-section {
+            width: 100%;
+        }
+        
+        .section-title {
+            color: #2a5298;
+            font-size: 24px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00c6ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #ff7e5f;
+        }
+        
+        /* Product List */
+        .product-list {
+            list-style-type: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-list li {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .product-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #2a5298;
+        }
+        
+        .product-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #f0f7ff;
+        }
+        
+        .product-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2a5298;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            color: #ff7e5f;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .product-btn {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+        }
+        
+        .product-btn:hover {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            transform: scale(1.05);
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .hero-image {
+                max-height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 24px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .topnav {
+                flex-direction: column;
+                display: none;
+            }
+            
+            .topnav.active {
+                display: flex;
+            }
+            
+            .topnav a {
+                width: 100%;
+                padding: 15px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .topnav a:last-child {
+                border-bottom: none;
+                margin-left: 0;
+            }
+            
+            .product-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .search-form {
+                flex-wrap: wrap;
+            }
+            
+            .search-form input {
+                min-width: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .brand {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .site-title {
+                font-size: 22px;
+            }
+            
+            .category {
+                font-size: 18px;
+                padding: 12px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .product-name {
+                font-size: 18px;
+            }
+            
+            .search-form button {
+                width: 100%;
+            }
+        }
+        
+        /* Animation for mobile menu */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .topnav.active {
+            animation: slideDown 0.3s ease forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="brand">
+            <img src="images/logo.jpg" class="logo" alt="Kimora's Pharmacy Logo">
+            <h1 class="site-title">Kimora's Pharmacy</h1>
+        </div>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i> Menu
+        </button>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <label for="searchBox">Search:</label>
+                <input type="text" id="searchBox" name="q" placeholder="Search products..." required>
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="topnav" id="topnav">
+            <a class="active" href="project.html"><i class="fas fa-home"></i> Home</a>
+            <a href="products.html"><i class="fas fa-pills"></i> Products</a>
+            <a href="services.html"><i class="fas fa-concierge-bell"></i> Services</a>
+            <a href="contact.html"><i class="fas fa-address-book"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+            <a href="cart.html" class="cart-right"><i class="fas fa-shopping-cart"></i> Cart & Fidelity</a>
+        </nav>
+    </div>
+    
+    <!-- Category Banner -->
+    <div class="category">
+        <h2>Welcome to our Online Pharmacy</h2>
+        <p style="font-size: 16px; font-weight: normal; margin-top: 5px;">Your health is our priority</p>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Image Section -->
+        <div class="hero-section">
+            <img src="images/about 2.jpg" class="hero-image" alt="Pharmacist assisting customer">
+        </div>
+        
+        <!-- Featured Products Section -->
+        <div class="products-section">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i> Featured Products
+            </h2>
+            
+            <ul class="product-list" id="productList">
+                <li>
+                    <img src="images/medicine-image1.jpg" class="product-image" alt="Ibuprofen tablets">
+                    <span class="product-name">Ibuprofen Tablets</span>
+                    <span class="product-price">$12.99</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+                
+                <li>
+                    <img src="images/medicine-image2.jpg" class="product-image" alt="Vitamin C tablets">
+                    <span class="product-name">Vitamin C Tablets</span>
+                    <span class="product-price">$9.99</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+                
+                <li>
+                    <img src="images/medicine-image3.jpg" class="product-image" alt="Cough syrup bottles">
+                    <span class="product-name">Cough Syrup</span>
+                    <span class="product-price">$15.50</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+                
+                <li>
+                    <img src="images/medicine-image4.jpg" class="product-image" alt="Sigmaceutical product">
+                    <span class="product-name">Sigmaceutical</span>
+                    <span class="product-price">$24.99</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+                
+                <li>
+                    <img src="images/medicine-image5.jpg" class="product-image" alt="Tylenol medication">
+                    <span class="product-name">Tylenol</span>
+                    <span class="product-price">$8.99</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+                
+                <li>
+                    <img src="images/medicine-image6.jpg" class="product-image" alt="Cortizone cream">
+                    <span class="product-name">Cortizone Cream</span>
+                    <span class="product-price">$11.75</span>
+                    <button class="product-btn">Add to Cart</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>Kimora's Pharmacy &copy; 2023. All Rights Reserved.</p>
+        <p>Your trusted partner in health and wellness</p>
+        <p>Contact: info@bortsieabigail68@gmail.com | Phone: (233) 24 412 4710</p>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const topnav = document.getElementById('topnav');
+        
+        menuToggle.addEventListener('click', function() {
+            topnav.classList.toggle('active');
+            menuToggle.innerHTML = topnav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i> Close' 
+                : '<i class="fas fa-bars"></i> Menu';
+        });
+        
+        // Search Functionality
+        const searchForm = document.getElementById('searchForm');
+        const productList = document.getElementById('productList');
+        const products = productList.querySelectorAll('li');
+        
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase().trim();
+            
+            let hasResults = false;
+            
+            products.forEach(product => {
+                const productName = product.querySelector('.product-name').textContent.toLowerCase();
+                
+                if (searchTerm === '' || productName.includes(searchTerm)) {
+                    product.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+            
+            // Show message if no results
+            if (!hasResults && searchTerm !== '') {
+                const noResults = document.createElement('div');
+                noResults.innerHTML = `<p style="text-align: center; padding: 30px; grid-column: 1/-1; font-size: 18px; color: #666;">No products found for "${searchTerm}". Try a different search term.</p>`;
+                
+                // Check if message already exists
+                const existingMessage = productList.querySelector('.no-results');
+                if (existingMessage) existingMessage.remove();
+                
+                noResults.className = 'no-results';
+                productList.appendChild(noResults);
+            } else {
+                // Remove no results message if it exists
+                const existingMessage = productList.querySelector('.no-results');
+                if (existingMessage) existingMessage.remove();
+            }
+            
+            // Clear search if empty
+            if (searchTerm === '') {
+                products.forEach(product => {
+                    product.style.display = 'flex';
+                });
+            }
+        });
+        
+        // Add to Cart functionality
+        document.querySelectorAll('.product-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.parentElement.querySelector('.product-name').textContent;
+                const productPrice = this.parentElement.querySelector('.product-price').textContent;
+                
+                // Create a simple notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                notification.innerHTML = `
+                    <strong>Added to Cart!</strong><br>
+                    ${productName} - ${productPrice}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            });
+        });
+        
+        // Add CSS for notification animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!topnav.contains(e.target) && !menuToggle.contains(e.target) && window.innerWidth <= 768) {
+                topnav.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                topnav.classList.remove('active');
+                topnav.style.display = 'flex';
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i> Menu';
+            } else {
+                topnav.style.display = topnav.classList.contains('active') ? 'flex' : 'none';
+            }
+        });
+    </script>
+</body>
+</html>
